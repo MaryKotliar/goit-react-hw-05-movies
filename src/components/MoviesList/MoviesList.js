@@ -12,7 +12,7 @@ export const Movieslist = ({ movies }) => {
       <ul>
         {movies.map(({ id, original_title, poster_path, name }) => (
           <li key={id}>
-            <img src={getPoster(poster_path)} />
+            <img src={getPoster(poster_path)} alt="poster" />
             <p>{original_title ?? name}</p>
           </li>
         ))}
