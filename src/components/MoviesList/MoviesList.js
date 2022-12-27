@@ -1,3 +1,5 @@
+import { MovieName, Container, CardWrapper } from './MoviesList.styled';
+import { Link } from 'react-router-dom';
 export const Movieslist = ({ movies }) => {
   function getPoster(poster) {
     if (poster === null) {
@@ -8,15 +10,17 @@ export const Movieslist = ({ movies }) => {
   }
 
   return (
-    <div>
-      <ul>
+    <>
+      <Container>
         {movies.map(({ id, original_title, poster_path, name }) => (
-          <li key={id}>
-            <img src={getPoster(poster_path)} alt="poster" />
-            <p>{original_title ?? name}</p>
-          </li>
+          <CardWrapper key={id}>
+            <Link to={`/movies/${id}`}>
+              <img src={getPoster(poster_path)} alt="poster" />
+              <MovieName>{original_title ?? name}</MovieName>
+            </Link>
+          </CardWrapper>
         ))}
-      </ul>
-    </div>
+      </Container>
+    </>
   );
 };

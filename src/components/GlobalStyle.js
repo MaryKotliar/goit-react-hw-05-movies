@@ -22,4 +22,10 @@ export const GlobalStyle = createGlobalStyle`
     padding: 0;
     list-style: none;
   }
+  img {
+    width:100%;
+    height:270px;
+    display: block;
+
+  }
   `;

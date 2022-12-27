@@ -23,3 +23,13 @@ const normalisedMovies = movies =>
     poster_path,
     name,
   }));
+
+export const fetchMovieById = async id => {
+  const { data } = await axios.get(`movie/${id}`, {
+    params: {
+      api_key: `${API_KEY}`,
+    },
+  });
+  console.log(data);
+  return data;
+};
