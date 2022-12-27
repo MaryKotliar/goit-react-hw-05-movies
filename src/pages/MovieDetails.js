@@ -2,13 +2,10 @@ import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { fetchMovieById } from 'api';
 export const MovieDetails = () => {
-  const [movie, setMovie] = useState();
+  const [movie, setMovie] = useState({});
   const { id } = useParams();
   useEffect(() => {
-    async function getMovieById(id) {
-      if (!id) {
-        return;
-      }
+    async function getMovieById() {
       try {
         const movie = fetchMovieById(id);
         console.log(movie);
@@ -16,15 +13,15 @@ export const MovieDetails = () => {
         console.log(movie);
       } catch {}
     }
-    getMovieById(id);
+    getMovieById();
   }, [id]);
   console.log(movie);
-
+  const { poster_path, original_title, vote_average, overview, genres } = movie;
   return (
     <div>
       <div>
         <img />
-        <h1>{movie.title}</h1>
+        <h1>{original_title}</h1>
         <p></p>
         <h2></h2>
         <p></p>
