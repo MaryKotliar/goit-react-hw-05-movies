@@ -7,6 +7,7 @@ export const fetchTrendingMovies = async () => {
   } = await axios.get('trending/all/day?', {
     params: {
       api_key: `${API_KEY}`,
+      language: 'en-US',
       // per_page: `${PER_PAGE}`,
       // page: `${currentPage}`,
     },
@@ -28,6 +29,28 @@ export const fetchMovieById = async id => {
   const { data } = await axios.get(`movie/${id}`, {
     params: {
       api_key: `${API_KEY}`,
+      language: 'en-US',
+    },
+  });
+
+  return data;
+};
+
+export const fetchCastInfo = async id => {
+  const { data } = await axios.get(`movie/${id}/credits?`, {
+    params: {
+      api_key: `${API_KEY}`,
+      language: 'en-US',
+    },
+  });
+  console.log(data);
+  return data;
+};
+export const fetchReviews = async id => {
+  const { data } = await axios.get(`movie/${id}/reviews?`, {
+    params: {
+      api_key: `${API_KEY}`,
+      language: 'en-US',
     },
   });
   console.log(data);
