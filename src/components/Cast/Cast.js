@@ -15,7 +15,7 @@ export const Cast = () => {
         setCastInfo(cast);
       } catch {}
     }
-    console.log(castInfo);
+
     getCastInfo();
   }, [id]);
   function getPoster(poster) {
@@ -31,7 +31,7 @@ export const Cast = () => {
       {castInfo.map(({ original_name, id, profile_path, character }) => (
         <li key={id}>
           <PhotoWrapper>
-            <img src={getPoster(profile_path)} />
+            <img src={getPoster(profile_path)} alt="poster" />
           </PhotoWrapper>
           <p>{original_name}</p>
           <p>Character:{character}</p>
