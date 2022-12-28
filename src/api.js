@@ -8,7 +8,8 @@ export const fetchTrendingMovies = async () => {
     params: {
       api_key: `${API_KEY}`,
       language: 'en-US',
-      // per_page: `${PER_PAGE}`,
+      include_adult: false,
+
       // page: `${currentPage}`,
     },
   });
@@ -30,6 +31,7 @@ export const fetchMovieById = async id => {
     params: {
       api_key: `${API_KEY}`,
       language: 'en-US',
+      include_adult: false,
     },
   });
 
@@ -41,6 +43,7 @@ export const fetchCastInfo = async id => {
     params: {
       api_key: `${API_KEY}`,
       language: 'en-US',
+      include_adult: false,
     },
   });
   console.log(data);
@@ -51,6 +54,20 @@ export const fetchReviews = async id => {
     params: {
       api_key: `${API_KEY}`,
       language: 'en-US',
+      include_adult: false,
+    },
+  });
+  console.log(data);
+  return data;
+};
+
+export const fetchMovieByName = async query => {
+  const { data } = await axios.get(`/search/movie/?`, {
+    params: {
+      api_key: `${API_KEY}`,
+      language: 'en-US',
+      query: `${query}`,
+      include_adult: false,
     },
   });
   console.log(data);

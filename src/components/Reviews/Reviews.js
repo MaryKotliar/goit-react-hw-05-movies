@@ -15,15 +15,17 @@ export const Reviews = () => {
     getReviews();
   }, [id]);
   return (
-    <ul>
-      {reviews
-        ? reviews.map(({ author, id, content }) => (
-            <li key={id}>
-              <p>Aithor: {author}</p>
-              <p>{content}</p>
-            </li>
-          ))
-        : 'We don`t have any reviews yet'}
-    </ul>
+    <div>
+      {reviews ? (
+        reviews.map(({ author, id, content }) => (
+          <div key={id}>
+            <p>Aithor: {author}</p>
+            <p>{content}</p>
+          </div>
+        ))
+      ) : (
+        <p>We don`t have any reviews yet</p>
+      )}
+    </div>
   );
 };
