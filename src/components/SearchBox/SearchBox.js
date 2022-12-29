@@ -1,5 +1,6 @@
 import { Wrapper, Input, Icon, Button } from './SearchBox.styled';
 import { useState } from 'react';
+import toast, { Toaster } from 'react-hot-toast';
 export const SearchBox = ({ name, onSubmit }) => {
   const [searchName, setSearchName] = useState('');
 
@@ -8,7 +9,11 @@ export const SearchBox = ({ name, onSubmit }) => {
   };
   const handleFormSubmit = event => {
     event.preventDefault();
+    if (searchName === '') {
+      toast.error('Please input search query!');
+    }
     onSubmit(searchName);
+    setSearchName('');
   };
   return (
     <Wrapper onSubmit={handleFormSubmit}>
@@ -16,8 +21,7 @@ export const SearchBox = ({ name, onSubmit }) => {
       <Button type="submit">
         <Icon />
       </Button>
+      <Toaster position="top-right" />
     </Wrapper>
   );
 };
-// https://api.themoviedb.org/3/search/movie/?&api_key=67983da9f1b0244a3f38bd567d5477a8&language=en-US&query=superman&include_adult=false
-// http://api.themoviedb.org/3/search/movie?api_key=67983da9f1b0244a3f38bd567d5477a8&include_adult=false&language=en-US&query=batman
