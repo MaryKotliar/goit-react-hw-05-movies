@@ -18,7 +18,7 @@ export const Home = () => {
   return (
     <main>
       <h1>Trending Movies</h1>
-      <Movieslist movies={movies} />
+      {movies && <Movieslist movies={movies} />}
     </main>
   );
 };

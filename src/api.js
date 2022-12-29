@@ -62,14 +62,16 @@ export const fetchReviews = async id => {
 };
 
 export const fetchMovieByName = async query => {
-  const { data } = await axios.get(`/search/movie/?`, {
+  const { data } = await axios.get(`/search/movie/?api_key=${API_KEY}`, {
     params: {
-      api_key: `${API_KEY}`,
+      include_adult: false,
       language: 'en-US',
       query: `${query}`,
-      include_adult: false,
     },
   });
   console.log(data);
-  return data;
+  return data.results;
 };
+// https://api.themoviedb.org/3/search/movie/?api_key=67983da9f1b0244a3f38bd567d5477a8&language=en-US&query=mama&include_adult=false
+// http://api.themoviedb.org/3/search/movie?api_key=67983da9f1b0244a3f38bd567d5477a8&include_adult=false&language=en-US&query=mama
+// https://api.themoviedb.org/3/search/movie/?api_key=67983da9f1b0244a3f38bd567d5477a8&include_adult=false&language=en-US&query=mama

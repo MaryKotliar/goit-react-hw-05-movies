@@ -16,8 +16,26 @@ export const Input = styled.input`
 `;
 
 export const Icon = styled(HiSearch)`
-  width: 20px;
-  height: 20px;
+  width: 22px;
+  height: 22px;
   position: absolute;
-  right: 6px;
+  right: 9px;
+  top: 10px;
+`;
+export const Button = styled.button`
+  display: inline-block;
+  width: 39px;
+  height: 39px;
+  border: 0;
+  background-size: 40%;
+  background-repeat: no-repeat;
+  background-position: center;
+  border-radius: 4px;
+  opacity: 0.6;
+  transition: opacity 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  outline: none;
+  &:hover {
+    opacity: 1;
+  }
 `;

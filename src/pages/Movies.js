@@ -6,31 +6,32 @@ import { Movieslist } from 'components/MoviesList/MoviesList';
 export const Movies = () => {
   const [movies, setMovies] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
-  const name = searchParams.get('name') ?? '';
-  const updateQueryString = name => {
-    const nextParams = name !== '' ? { name } : {};
-    setSearchParams(nextParams);
-  };
+  const nameQuery = searchParams.get('query') ?? '';
+  // const updateQueryString = name => {
+  //   const nextParams = name !== '' ? { name } : {};
+  //   setSearchParams(nextParams);
+  // };
 
   useEffect(() => {
-    if (name === '') return;
+    if (nameQuery === '') return;
     async function getMoviesByName() {
       try {
-        const movies = await fetchMovieByName(name);
+        const movies = await fetchMovieByName(nameQuery);
 
         setMovies(movies);
         console.log(movies);
       } catch {}
     }
     getMoviesByName();
-  }, [name]);
-  // const visibleMovies = movies.filter(movie =>
-  //   movie.name.toLowerCase().includes(name.toLowerCase())
-  // );
+  }, [nameQuery]);
+
+  const onSubmit = name => {
+    setSearchParams(name !== '' ? { query: name } : {});
+  };
   return (
     <main>
-      <SearchBox value={name} onChange={updateQueryString}></SearchBox>
-      {/* <Movieslist movies={movies} /> */}
+      <SearchBox value={nameQuery} onSubmit={onSubmit}></SearchBox>
+      {movies && <Movieslist movies={movies} />}
     </main>
   );
 };
