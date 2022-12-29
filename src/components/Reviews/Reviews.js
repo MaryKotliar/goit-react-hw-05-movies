@@ -3,6 +3,7 @@ import { fetchReviews } from 'api';
 import { useParams } from 'react-router-dom';
 import { ColorRing } from 'react-loader-spinner';
 import toast, { Toaster } from 'react-hot-toast';
+import { Text, TextReview } from './Reviews.styled';
 export const Reviews = () => {
   const [reviews, setReviews] = useState('');
   const [loading, setlLoading] = useState(false);
@@ -42,8 +43,8 @@ export const Reviews = () => {
       {reviews.length !== 0 ? (
         reviews.map(({ author, id, content }) => (
           <div key={id}>
-            <p>Aithor: {author}</p>
-            <p>{content}</p>
+            <Text>Author: {author}</Text>
+            <TextReview>{content}</TextReview>
           </div>
         ))
       ) : (

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { fetchCastInfo } from 'api';
 import { useParams } from 'react-router-dom';
-import { PhotoWrapper } from './Cast.styled';
+import { PhotoWrapper, Container } from './Cast.styled';
 import { ColorRing } from 'react-loader-spinner';
 import toast, { Toaster } from 'react-hot-toast';
 export const Cast = () => {
@@ -49,7 +49,7 @@ export const Cast = () => {
         />
       )}
       {error && toast.error("This didn't work.Please try again later !")}
-      <ul>
+      <Container>
         {castInfo.map(({ original_name, id, profile_path, character }) => (
           <li key={id}>
             <PhotoWrapper>
@@ -59,7 +59,7 @@ export const Cast = () => {
             <p>Character:{character}</p>
           </li>
         ))}
-      </ul>
+      </Container>
       <Toaster position="top-right" />
     </>
   );

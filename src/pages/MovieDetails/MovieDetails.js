@@ -1,7 +1,13 @@
 import { Outlet, useParams, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { fetchMovieById } from 'api';
-import { MovieInfoWrapper, PosterWrapper } from './MovieDetails.styled';
+import {
+  AddInfoWrapper,
+  AddInfoItem,
+  InfoWrapper,
+  MovieInfoWrapper,
+  PosterWrapper,
+} from './MovieDetails.styled';
 import { Link } from 'react-router-dom';
 import { ColorRing } from 'react-loader-spinner';
 import toast, { Toaster } from 'react-hot-toast';
@@ -54,34 +60,39 @@ export const MovieDetails = () => {
         />
       )}
       {error && toast.error("This didn't work.Please try again later !")}
-      <GoBackLink to={backLinkHref}>Go Back</GoBackLink>
-      <MovieInfoWrapper>
-        <PosterWrapper>
-          <img src={getPoster(poster_path)} alt="poster" />
-        </PosterWrapper>
-        <div>
-          <h1>{original_title}</h1>
-          <p>User Score: {userScore}%</p>
-          <h2>Overview</h2>
-          {overview ? <p>{overview}</p> : 'Overview is not available.'}
-          <h2>Genres</h2>
-          {genres
-            ? genres.map((genre, index) => <p key={index}>{genre.name}</p>)
-            : 'Genres is not available'}
-        </div>
-      </MovieInfoWrapper>
-      <div>
-        <ul>
-          Additional Information
-          <li>
-            <Link to="cast">Cast</Link>
-          </li>
-          <li>
-            <Link to="reviews">Reviews</Link>
-          </li>
-        </ul>
-        <Outlet />
-      </div>
+
+      {!error && <GoBackLink to={backLinkHref}>Go Back</GoBackLink>}
+      {!error && (
+        <MovieInfoWrapper>
+          <PosterWrapper>
+            <img src={getPoster(poster_path)} alt="poster" />
+          </PosterWrapper>
+          <InfoWrapper>
+            <h1>{original_title}</h1>
+            <p>User Score: {userScore}%</p>
+            <h2>Overview</h2>
+            {overview ? <p>{overview}</p> : 'Overview is not available.'}
+            <h2>Genres</h2>
+            {genres
+              ? genres.map((genre, index) => <p key={index}>{genre.name}</p>)
+              : 'Genres is not available'}
+          </InfoWrapper>
+        </MovieInfoWrapper>
+      )}
+      {!error && (
+        <AddInfoWrapper>
+          <ul>
+            Additional Information
+            <AddInfoItem>
+              <Link to="cast">Cast</Link>
+            </AddInfoItem>
+            <AddInfoItem>
+              <Link to="reviews">Reviews</Link>
+            </AddInfoItem>
+          </ul>
+          <Outlet />
+        </AddInfoWrapper>
+      )}
       <Toaster position="top-right" />
     </div>
   );

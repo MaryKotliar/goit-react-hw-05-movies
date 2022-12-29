@@ -46,7 +46,7 @@ export const fetchCastInfo = async id => {
       include_adult: false,
     },
   });
-  console.log(data);
+
   return data;
 };
 export const fetchReviews = async id => {
@@ -57,7 +57,7 @@ export const fetchReviews = async id => {
       include_adult: false,
     },
   });
-  console.log(data);
+
   return data;
 };
 
@@ -69,6 +69,6 @@ export const fetchMovieByName = async query => {
       query: `${query}`,
     },
   });
-  console.log(data);
+
   return data.results;
 };
