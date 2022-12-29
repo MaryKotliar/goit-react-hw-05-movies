@@ -11,6 +11,7 @@ export const Home = () => {
     async function getMovies() {
       try {
         setlLoading(true);
+        setError(false);
         const movies = await fetchTrendingMovies();
 
         setMovies(prevMovies => [...prevMovies, ...movies]);

@@ -3,17 +3,27 @@ import { useState, useEffect } from 'react';
 import { fetchMovieById } from 'api';
 import { MovieInfoWrapper, PosterWrapper } from './MovieDetails.styled';
 import { Link } from 'react-router-dom';
-
+import { ColorRing } from 'react-loader-spinner';
+import toast, { Toaster } from 'react-hot-toast';
 export const MovieDetails = () => {
   const [movie, setMovie] = useState({});
+  const [loading, setlLoading] = useState(false);
+  const [error, setError] = useState(null);
   const { id } = useParams();
   useEffect(() => {
     async function getMovieById() {
       try {
+        setlLoading(true);
+        setError(false);
         const movieData = await fetchMovieById(id);
 
         setMovie(movieData);
-      } catch {}
+      } catch (error) {
+        setError(true);
+        console.log(error);
+      } finally {
+        setlLoading(false);
+      }
     }
     getMovieById();
   }, [id]);
@@ -29,6 +39,18 @@ export const MovieDetails = () => {
   const userScore = Math.round(vote_average * 10);
   return (
     <div>
+      {loading && (
+        <ColorRing
+          visible={true}
+          height="80"
+          width="80"
+          ariaLabel="blocks-loading"
+          wrapperStyle={{}}
+          wrapperClass="blocks-wrapper"
+          colors={['#e15b64', '#f47e60', '#f8b26a', '#abbd81', '#849b87']}
+        />
+      )}
+      {error && toast.error("This didn't work.Please try again later !")}
       <MovieInfoWrapper>
         <PosterWrapper>
           <img src={getPoster(poster_path)} alt="poster" />
@@ -56,6 +78,7 @@ export const MovieDetails = () => {
         </ul>
         <Outlet />
       </div>
+      <Toaster position="top-right" />
     </div>
   );
 };
