@@ -1,15 +1,18 @@
-import { Outlet, useParams } from 'react-router-dom';
+import { Outlet, useParams, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { fetchMovieById } from 'api';
 import { MovieInfoWrapper, PosterWrapper } from './MovieDetails.styled';
 import { Link } from 'react-router-dom';
 import { ColorRing } from 'react-loader-spinner';
 import toast, { Toaster } from 'react-hot-toast';
+import { GoBackLink } from 'components/GoBackLink/GoBackLink';
 export const MovieDetails = () => {
   const [movie, setMovie] = useState({});
   const [loading, setlLoading] = useState(false);
   const [error, setError] = useState(null);
   const { id } = useParams();
+  const location = useLocation();
+  const backLinkHref = location.state?.from ?? '/';
   useEffect(() => {
     async function getMovieById() {
       try {
@@ -51,6 +54,7 @@ export const MovieDetails = () => {
         />
       )}
       {error && toast.error("This didn't work.Please try again later !")}
+      <GoBackLink to={backLinkHref}>Go Back</GoBackLink>
       <MovieInfoWrapper>
         <PosterWrapper>
           <img src={getPoster(poster_path)} alt="poster" />
