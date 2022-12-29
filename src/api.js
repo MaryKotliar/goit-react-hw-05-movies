@@ -62,7 +62,7 @@ export const fetchReviews = async id => {
 };
 
 export const fetchMovieByName = async query => {
-  const { data } = await axios.get(`/search/movie/?api_key=${API_KEY}`, {
+  const { data } = await axios.get(`search/movie?api_key=${API_KEY}`, {
     params: {
       include_adult: false,
       language: 'en-US',
