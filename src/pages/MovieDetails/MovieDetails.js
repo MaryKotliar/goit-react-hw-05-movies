@@ -1,5 +1,5 @@
 import { Outlet, useParams, useLocation } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { fetchMovieById } from 'api';
 import {
   AddInfoWrapper,
@@ -12,6 +12,7 @@ import { Link } from 'react-router-dom';
 import { ColorRing } from 'react-loader-spinner';
 import toast, { Toaster } from 'react-hot-toast';
 import { GoBackLink } from 'components/GoBackLink/GoBackLink';
+
 export const MovieDetails = () => {
   const [movie, setMovie] = useState({});
   const [loading, setlLoading] = useState(false);
@@ -61,8 +62,8 @@ export const MovieDetails = () => {
       )}
       {error && toast.error("This didn't work.Please try again later !")}
 
-      {!error && <GoBackLink to={backLinkHref}>Go Back</GoBackLink>}
-      {!error && (
+      {!error && !loading && <GoBackLink to={backLinkHref}>Go Back</GoBackLink>}
+      {!error && !loading && (
         <MovieInfoWrapper>
           <PosterWrapper>
             <img src={getPoster(poster_path)} alt="poster" />
@@ -79,7 +80,7 @@ export const MovieDetails = () => {
           </InfoWrapper>
         </MovieInfoWrapper>
       )}
-      {!error && (
+      {!error && !loading && (
         <AddInfoWrapper>
           <ul>
             Additional Information
@@ -90,10 +91,14 @@ export const MovieDetails = () => {
               <Link to="reviews">Reviews</Link>
             </AddInfoItem>
           </ul>
-          <Outlet />
         </AddInfoWrapper>
       )}
+
       <Toaster position="top-right" />
+      <Suspense fallback={<div>Loading subpage...</div>}>
+        <Outlet />
+      </Suspense>
     </div>
   );
 };
+export default MovieDetails;

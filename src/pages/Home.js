@@ -15,7 +15,6 @@ export const Home = () => {
         const movies = await fetchTrendingMovies();
 
         setMovies(prevMovies => [...prevMovies, ...movies]);
-        console.log(movies);
       } catch (error) {
         setError(true);
         console.log(error);
@@ -46,3 +45,4 @@ export const Home = () => {
     </main>
   );
 };
+export default Home;
