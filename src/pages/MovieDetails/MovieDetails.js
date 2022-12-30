@@ -13,7 +13,7 @@ import { ColorRing } from 'react-loader-spinner';
 import toast, { Toaster } from 'react-hot-toast';
 import { GoBackLink } from 'components/GoBackLink/GoBackLink';
 
-export const MovieDetails = () => {
+const MovieDetails = () => {
   const [movie, setMovie] = useState({});
   const [loading, setlLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -90,14 +90,14 @@ export const MovieDetails = () => {
             <AddInfoItem>
               <Link to="reviews">Reviews</Link>
             </AddInfoItem>
+            <Suspense fallback={<div>Loading subpage...</div>}>
+              <Outlet />
+            </Suspense>
           </ul>
         </AddInfoWrapper>
       )}
 
       <Toaster position="top-right" />
-      <Suspense fallback={<div>Loading subpage...</div>}>
-        <Outlet />
-      </Suspense>
     </div>
   );
 };

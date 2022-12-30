@@ -3,7 +3,7 @@ import { Movieslist } from 'components/MoviesList/MoviesList';
 import { useState, useEffect } from 'react';
 import { ColorRing } from 'react-loader-spinner';
 import toast, { Toaster } from 'react-hot-toast';
-export const Home = () => {
+const Home = () => {
   const [movies, setMovies] = useState([]);
   const [error, setError] = useState(false);
   const [loading, setlLoading] = useState(false);

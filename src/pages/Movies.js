@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 import { Movieslist } from 'components/MoviesList/MoviesList';
 import { ColorRing } from 'react-loader-spinner';
 import toast, { Toaster } from 'react-hot-toast';
-export const Movies = () => {
+const Movies = () => {
   const [movies, setMovies] = useState([]);
   const [loading, setlLoading] = useState(false);
   const [error, setError] = useState(false);

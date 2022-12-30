@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import { PhotoWrapper, Container } from './Cast.styled';
 import { ColorRing } from 'react-loader-spinner';
 import toast, { Toaster } from 'react-hot-toast';
-export const Cast = () => {
+const Cast = () => {
   const [castInfo, setCastInfo] = useState([]);
   const [loading, setlLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -64,3 +64,4 @@ export const Cast = () => {
     </>
   );
 };
+export default Cast;
