@@ -9,9 +9,7 @@ export const SearchBox = ({ name, onSubmit }) => {
   };
   const handleFormSubmit = event => {
     event.preventDefault();
-    if (searchName === '') {
-      toast.error('Please input search query!');
-    }
+
     onSubmit(searchName);
     setSearchName('');
   };

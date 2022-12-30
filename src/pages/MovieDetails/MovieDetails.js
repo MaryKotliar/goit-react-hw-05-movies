@@ -90,10 +90,10 @@ const MovieDetails = () => {
             <AddInfoItem>
               <Link to="reviews">Reviews</Link>
             </AddInfoItem>
-            <Suspense fallback={<div>Loading subpage...</div>}>
-              <Outlet />
-            </Suspense>
           </ul>
+          <Suspense fallback={<div>Loading subpage...</div>}>
+            <Outlet />
+          </Suspense>
         </AddInfoWrapper>
       )}
 

@@ -39,6 +39,9 @@ const Movies = () => {
 
   const onSubmit = name => {
     setSearchParams(name !== '' ? { query: name } : {});
+    if (name === '') {
+      toast.error('Please input search query!');
+    }
   };
   return (
     <main>
