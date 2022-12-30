@@ -1,6 +1,6 @@
 import { Wrapper, Input, Icon, Button } from './SearchBox.styled';
 import { useState } from 'react';
-import toast, { Toaster } from 'react-hot-toast';
+
 export const SearchBox = ({ name, onSubmit }) => {
   const [searchName, setSearchName] = useState('');
 
@@ -19,7 +19,6 @@ export const SearchBox = ({ name, onSubmit }) => {
       <Button type="submit">
         <Icon />
       </Button>
-      <Toaster position="top-right" />
     </Wrapper>
   );
 };
