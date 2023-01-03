@@ -1,4 +1,4 @@
-import { Outlet, useParams, useLocation } from 'react-router-dom';
+import { Outlet, useParams, useLocation, Link } from 'react-router-dom';
 import { useState, useEffect, Suspense } from 'react';
 import { fetchMovieById } from 'api';
 import {
@@ -8,7 +8,7 @@ import {
   MovieInfoWrapper,
   PosterWrapper,
 } from './MovieDetails.styled';
-import { Link } from 'react-router-dom';
+
 import { Loader } from 'components/Loader';
 import toast, { Toaster } from 'react-hot-toast';
 import { GoBackLink } from 'components/GoBackLink/GoBackLink';
@@ -81,7 +81,9 @@ const MovieDetails = () => {
               </Link>
             </AddInfoItem>
             <AddInfoItem>
-              <Link to="reviews">Reviews</Link>
+              <Link to="reviews" state={{ from: backLinkHref }}>
+                Reviews
+              </Link>
             </AddInfoItem>
           </ul>
           <Suspense fallback={<div>Loading subpage...</div>}>
