@@ -1,24 +1,23 @@
 import { useState, useEffect } from 'react';
 import { fetchReviews } from 'api';
 import { useParams } from 'react-router-dom';
-import { ColorRing } from 'react-loader-spinner';
+import { Loader } from 'components/Loader';
 import toast, { Toaster } from 'react-hot-toast';
 import { Text, TextReview } from './Reviews.styled';
 const Reviews = () => {
   const [reviews, setReviews] = useState('');
   const [loading, setlLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState('');
   const { id } = useParams();
   useEffect(() => {
     async function getReviews() {
       try {
         setlLoading(true);
-        setError(false);
+        setError('');
         const { results } = await fetchReviews(id);
         setReviews(results);
       } catch (error) {
-        setError(true);
-        console.log(error);
+        setError('This didn`t work. Please try again later.');
       } finally {
         setlLoading(false);
       }
@@ -26,20 +25,14 @@ const Reviews = () => {
 
     getReviews();
   }, [id]);
+  useEffect(() => {
+    if (!error) return;
+    toast.error(error);
+  }, [error]);
   return (
     <div>
-      {loading && (
-        <ColorRing
-          visible={true}
-          height="80"
-          width="80"
-          ariaLabel="blocks-loading"
-          wrapperStyle={{}}
-          wrapperClass="blocks-wrapper"
-          colors={['#e15b64', '#f47e60', '#f8b26a', '#abbd81', '#849b87']}
-        />
-      )}
-      {error && toast.error("This didn't work.Please try again later !")}
+      {loading && <Loader />}
+
       {reviews.length !== 0 ? (
         reviews.map(({ author, id, content }) => (
           <div key={id}>

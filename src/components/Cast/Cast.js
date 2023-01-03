@@ -2,24 +2,23 @@ import { useState, useEffect } from 'react';
 import { fetchCastInfo } from 'api';
 import { useParams } from 'react-router-dom';
 import { PhotoWrapper, Container } from './Cast.styled';
-import { ColorRing } from 'react-loader-spinner';
+import { Loader } from 'components/Loader';
 import toast, { Toaster } from 'react-hot-toast';
 const Cast = () => {
   const [castInfo, setCastInfo] = useState([]);
   const [loading, setlLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState('');
   const { id } = useParams();
 
   useEffect(() => {
     async function getCastInfo() {
       try {
         setlLoading(true);
-        setError(false);
+        setError('');
         const { cast } = await fetchCastInfo(id);
         setCastInfo(cast);
       } catch (error) {
-        setError(true);
-        console.log(error);
+        setError('This didn`t work. Please try again later.');
       } finally {
         setlLoading(false);
       }
@@ -27,6 +26,11 @@ const Cast = () => {
 
     getCastInfo();
   }, [id]);
+  useEffect(() => {
+    if (!error) return;
+    toast.error(error);
+  }, [error]);
+
   function getPoster(poster) {
     if (poster === null) {
       return 'https://upload.wikimedia.org/wikipedia/commons/6/64/Poster_not_available.jpg';
@@ -37,18 +41,8 @@ const Cast = () => {
 
   return (
     <>
-      {loading && (
-        <ColorRing
-          visible={true}
-          height="80"
-          width="80"
-          ariaLabel="blocks-loading"
-          wrapperStyle={{}}
-          wrapperClass="blocks-wrapper"
-          colors={['#e15b64', '#f47e60', '#f8b26a', '#abbd81', '#849b87']}
-        />
-      )}
-      {error && toast.error("This didn't work.Please try again later !")}
+      {loading && <Loader />}
+
       <Container>
         {castInfo.map(({ original_name, id, profile_path, character }) => (
           <li key={id}>

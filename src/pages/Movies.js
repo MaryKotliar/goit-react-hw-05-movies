@@ -3,12 +3,12 @@ import { useSearchParams } from 'react-router-dom';
 import { fetchMovieByName } from 'api';
 import { useState, useEffect } from 'react';
 import { Movieslist } from 'components/MoviesList/MoviesList';
-import { ColorRing } from 'react-loader-spinner';
+import { Loader } from 'components/Loader';
 import toast, { Toaster } from 'react-hot-toast';
 const Movies = () => {
   const [movies, setMovies] = useState([]);
   const [loading, setlLoading] = useState(false);
-  const [error, setError] = useState(false);
+  const [error, setError] = useState('');
   const [searchParams, setSearchParams] = useSearchParams();
   const nameQuery = searchParams.get('query') ?? '';
 
@@ -17,30 +17,31 @@ const Movies = () => {
     async function getMoviesByName() {
       try {
         setlLoading(true);
-        setError(false);
+        setError('');
 
         const movies = await fetchMovieByName(nameQuery);
 
         setMovies(movies);
         if (movies.length < 1) {
-          toast.error(
-            'Sorry, we didn`t find movies according to your request.'
-          );
+          setError('Sorry, we didn`t find movies according to your request.');
         }
       } catch (error) {
-        setError(true);
-        console.log(error);
+        setError('This didn`t work. Please try again later.');
       } finally {
         setlLoading(false);
       }
     }
     getMoviesByName();
   }, [nameQuery]);
+  useEffect(() => {
+    if (!error) return;
+    toast.error(error);
+  }, [error]);
 
   const onSubmit = name => {
     setSearchParams(name !== '' ? { query: name } : {});
     if (name === '') {
-      toast.error('Please input search query!');
+      setError('Please input search query!');
     }
   };
   return (
@@ -48,18 +49,8 @@ const Movies = () => {
       <SearchBox value={nameQuery} onSubmit={onSubmit}></SearchBox>
 
       {movies && <Movieslist movies={movies} />}
-      {error && toast.error("This didn't work.Please try again later !")}
-      {loading && (
-        <ColorRing
-          visible={true}
-          height="80"
-          width="80"
-          ariaLabel="blocks-loading"
-          wrapperStyle={{}}
-          wrapperClass="blocks-wrapper"
-          colors={['#e15b64', '#f47e60', '#f8b26a', '#abbd81', '#849b87']}
-        />
-      )}
+
+      {loading && <Loader />}
       <Toaster position="top-right" />
     </main>
   );

@@ -1,13 +1,13 @@
 import { MovieName, Container, CardWrapper } from './MoviesList.styled';
 import { Link, useLocation } from 'react-router-dom';
-export const Movieslist = ({ movies }) => {
-  function getPoster(poster) {
-    if (poster === null) {
-      return 'https://upload.wikimedia.org/wikipedia/commons/6/64/Poster_not_available.jpg';
-    } else {
-      return `https://image.tmdb.org/t/p/w300/${poster}`;
-    }
+function getPoster(poster) {
+  if (!poster) {
+    return 'https://upload.wikimedia.org/wikipedia/commons/6/64/Poster_not_available.jpg';
+  } else {
+    return `https://image.tmdb.org/t/p/w300/${poster}`;
   }
+}
+export const Movieslist = ({ movies }) => {
   const location = useLocation();
   return (
     <>

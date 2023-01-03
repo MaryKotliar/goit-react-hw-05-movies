@@ -9,14 +9,20 @@ import {
   PosterWrapper,
 } from './MovieDetails.styled';
 import { Link } from 'react-router-dom';
-import { ColorRing } from 'react-loader-spinner';
+import { Loader } from 'components/Loader';
 import toast, { Toaster } from 'react-hot-toast';
 import { GoBackLink } from 'components/GoBackLink/GoBackLink';
-
+function getPoster(poster) {
+  if (!poster) {
+    return 'https://upload.wikimedia.org/wikipedia/commons/6/64/Poster_not_available.jpg';
+  } else {
+    return `https://image.tmdb.org/t/p/w300/${poster}`;
+  }
+}
 const MovieDetails = () => {
   const [movie, setMovie] = useState({});
   const [loading, setlLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState('');
   const { id } = useParams();
   const location = useLocation();
   const backLinkHref = location.state?.from ?? '/';
@@ -24,43 +30,28 @@ const MovieDetails = () => {
     async function getMovieById() {
       try {
         setlLoading(true);
-        setError(false);
+        setError('');
         const movieData = await fetchMovieById(id);
 
         setMovie(movieData);
       } catch (error) {
-        setError(true);
-        console.log(error);
+        setError('This didn`t work. Please try again later.');
       } finally {
         setlLoading(false);
       }
     }
     getMovieById();
   }, [id]);
+  useEffect(() => {
+    if (!error) return;
+    toast.error(error);
+  }, [error]);
 
-  function getPoster(poster) {
-    if (poster === null) {
-      return 'https://upload.wikimedia.org/wikipedia/commons/6/64/Poster_not_available.jpg';
-    } else {
-      return `https://image.tmdb.org/t/p/w300/${poster}`;
-    }
-  }
   const { poster_path, original_title, vote_average, overview, genres } = movie;
   const userScore = Math.round(vote_average * 10);
   return (
     <div>
-      {loading && (
-        <ColorRing
-          visible={true}
-          height="80"
-          width="80"
-          ariaLabel="blocks-loading"
-          wrapperStyle={{}}
-          wrapperClass="blocks-wrapper"
-          colors={['#e15b64', '#f47e60', '#f8b26a', '#abbd81', '#849b87']}
-        />
-      )}
-      {error && toast.error("This didn't work.Please try again later !")}
+      {loading && <Loader />}
 
       {!error && !loading && <GoBackLink to={backLinkHref}>Go Back</GoBackLink>}
       {!error && !loading && (
@@ -85,7 +76,9 @@ const MovieDetails = () => {
           <ul>
             Additional Information
             <AddInfoItem>
-              <Link to="cast">Cast</Link>
+              <Link to="cast" state={{ from: backLinkHref }}>
+                Cast
+              </Link>
             </AddInfoItem>
             <AddInfoItem>
               <Link to="reviews">Reviews</Link>
